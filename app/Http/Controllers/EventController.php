@@ -28,7 +28,7 @@ class EventController extends Controller
             'image' => 'required',
             'description' => 'required',
             'date' => 'required|date',
-            'status' => 'required',
+            // 'status' => 'required',
             'typeAccept' => 'required',
             'location' => 'required',
             'category_id' => 'required|numeric',
@@ -45,7 +45,7 @@ class EventController extends Controller
         $event->description = $validatedData['description'];
         $event->date = $validatedData['date'];
         $event->user_id = $request->user_id;
-        $event->status = $validatedData['status'];
+        // $event->status = $validatedData['status'];
         $event->typeAccept = $validatedData['typeAccept'];
         $event->location = $validatedData['location'];
         $event->category_id = $validatedData['category_id'];

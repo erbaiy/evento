@@ -5,6 +5,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::get('/signUp', [AuthentificationController::class, 'getSignUpView'])->nam
 Route::post('/register', [AuthentificationController::class, 'register'])->name('auth_Rogister');
 Route::get('/signIn', [AuthentificationController::class, 'getSignInView'])->name('getSignInView');
 Route::post('/login', [AuthentificationController::class, 'login'])->name('auth_Login');
+
+Route::get('logout', [AuthentificationController::class, 'logout'])->name('auth_Logout');
 
 
 // Reset password routes
@@ -58,6 +61,8 @@ Route::get('detail', function () {
 });
 
 //event 
-Route::get('event', [EventController::class, 'index'])->name('event.index');
+
+
+Route::middleware([CheckAuth::class])->get('event', [EventController::class, 'index'])->name('event.index');
 Route::post('event/store', [EventController::class, 'store'])->name('events.store');
 Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('events.destroy');

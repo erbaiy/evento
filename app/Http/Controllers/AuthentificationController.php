@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class AuthentificationController extends Controller
 {
@@ -65,5 +66,13 @@ class AuthentificationController extends Controller
             session('id');
             echo '<h1 class="alert alert-danger"> welcome in home page</h1>';
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $request->session()->flash('success', 'Vous avez été déconnecté avec succès.');
+        return redirect()->route('getSignUpView');
     }
 }

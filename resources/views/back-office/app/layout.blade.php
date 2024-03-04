@@ -327,7 +327,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="sign-in.html">
+                    <a class="nav-link  " href="{{ route('auth_Logout') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1"
@@ -350,7 +350,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Sign In</span>
+                        <span class="nav-link-text ms-1">Logout</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -418,9 +418,9 @@
                                 Builder</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
+
+                            <a href="{{ route('auth_Logout') }}" class="nav-link text-body font-weight-bold px-0">
+                                <i class="fas fa-sign-out-alt"></i> <span class="d-sm-inline d-none">logou</span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -525,9 +525,9 @@
                 </div>
             </div>
         </nav>
-<div>
-    @yield('content')
-</div>
+        <div>
+            @yield('content')
+        </div>
 
 
 

@@ -92,16 +92,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">User:</label>
-                            <input type="hidden" name="user_id" id="user_id" value="1" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status:</label>
-                            <select name="status" id="status" class="form-select">
-                                <option value="valide">Valid</option>
-                                <option value="invalide">Invalid</option>
-                            </select>
+                            <input type="hidden" name="user_id" id="user_id" value="{{ session('id') }}"
+                                class="form-control">
                         </div>
 
                         <div class="mb-3">
