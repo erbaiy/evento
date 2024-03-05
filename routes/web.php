@@ -66,16 +66,18 @@ Route::post('event/store', [EventController::class, 'store'])->name('events.stor
 Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('events.destroy');
 
 
-//hundel event
+//hundel event admin
 Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
 Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
-
 
 // front-office events
 
 Route::get('acceuill', [ReservationController::class, 'index'])->name('acceuill');
-// Route::post('reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
-Route::post('/reserve', [ReservationController::class, 'reserve'])->name('reserveTicket');
+Route::post('/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
+
+// action reservation organizateur 
+Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
+Route::post('/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
 
 
 

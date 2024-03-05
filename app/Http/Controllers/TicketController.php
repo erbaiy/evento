@@ -11,4 +11,5 @@ class TicketController extends Controller
         $tickets = \App\Models\Ticket::all();
         return view('back-office.ticket.index', compact('tickets'));
     }
+    // 1 check the s
 }
