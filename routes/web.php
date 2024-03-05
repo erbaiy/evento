@@ -4,8 +4,12 @@ use App\Http\Controllers\AuthentificationController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAuth;
+use App\Models\Ticket;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,15 +54,9 @@ Route::put('Category/update', [CategoryController::class, 'update'])->name('cate
 
 
 
-
-// front-office view
-
-Route::get('index', function () {
-    return view('front-office.index');
-});
 Route::get('detail', function () {
     return view('front-office.detail');
-});
+})->name('front-office.detail');
 
 //event 
 
@@ -66,3 +64,23 @@ Route::get('detail', function () {
 Route::middleware([CheckAuth::class])->get('event', [EventController::class, 'index'])->name('event.index');
 Route::post('event/store', [EventController::class, 'store'])->name('events.store');
 Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('events.destroy');
+
+
+//hundel event
+Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
+Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
+
+
+// front-office events
+
+Route::get('acceuill', [ReservationController::class, 'index'])->name('acceuill');
+// Route::post('reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
+Route::post('/reserve', [ReservationController::class, 'reserve'])->name('reserveTicket');
+
+
+
+
+// Ticket 
+
+
+Route::get('ticket', [TicketController::class, 'index'])->name('ticket.index');

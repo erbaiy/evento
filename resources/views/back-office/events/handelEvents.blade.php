@@ -13,18 +13,18 @@
 
             @foreach ($events as $event)
                 <tr>
-                    <th scope="row">1</th>
                     <td>{{ $event->title }}</td>
-                    <td>{{ $event->places }}</td>
-                    <td>
-                        <a type="button" class="btn btn-success">Success</a>
-                    </td>
-                    <td>
-                        <form action="{{ route('events.destroy', $event->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                    <td> <img src="{{ $event->image }}" class="w-10" alt=""></td>
+                    <form action="{{ route('eventAction') }}" method="POST">
+                        @csrf
+                        <td><input type="hidden" name="id" value="{{ $event->id }}"></td>
+                        <td>
+
+                            <button type="submit" class="btn btn-success" name="valide" value="valide">accept</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-danger" name="invalide" value="invalide">refuse</button>
+                    </form>
                     </td>
                 </tr>
             @endforeach

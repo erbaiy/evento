@@ -21,8 +21,9 @@
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">image</th>
                 <th scope="col">title</th>
-                <th scope="col">places</th>
+                <th scope="col">location</th>
                 <th scope="col">update</th>
                 <th scope="col">delete</th>
             </tr>
@@ -31,9 +32,9 @@
 
             @foreach ($events as $event)
                 <tr>
-                    <th scope="row">1</th>
+                    <td> <img src="{{ $event->image }}" class="w-10" alt=""></td>
                     <td>{{ $event->title }}</td>
-                    <td>{{ $event->places }}</td>
+                    <td>{{ $event->location }}</td>
                     <td>
                         <a type="button" class="btn btn-success">Success</a>
                     </td>

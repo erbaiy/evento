@@ -88,6 +88,7 @@
         <!-- Header End -->
     </header>
     <main>
+
         <!--? slider Area Start-->
         <div class="slider-area position-relative">
             <div class="slider-active">
@@ -164,13 +165,63 @@
             </div>
             <!-- Counter Section End -->
         </div>
+        <!--? Blog Area Start -->
+        <section class="home-blog-area section-padding30">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-8">
+                        <div class="section-tittle text-center mb-50">
+                            <h2>News From Blog</h2>
+                            <p>There arge many variations ohf passages of sorem gp ilable, but the majority have ssorem
+                                gp iluffe.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($events as $event)
+                        @csrf
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="home-blog-single mb-30">
+                                <div class="blog-img-cap">
+                                    <div class="blog-img">
+                                        <img src="{{ $event->image }}" alt="">
+                                        <!-- Blog date -->
+                                        <div class="blog-date text-center">
+                                            <span>{{ $event->places }}</span>
+                                            <p>places</p>
+                                        </div>
+                                    </div>
+                                    <div class="blog-cap">
+                                        <p>{{ $event->title }}</p>
+                                        <h3><a href="blog_details.html">{{ $event->location }}</a></h3>
+                                    </div>
+
+                                    <form action="{{ route('reserveTicket') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ session('id') }}">
+                                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                        <button type="submit" class="btn btn-seccess">get ticket </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+                </div>
+
+            </div>
+        </section>
+        <!-- Blog Area End -->
         <!-- slider Area End-->
 
 
         <!--? accordion -->
 
         <!-- accordion End -->
-        <!--? gallery Products Start -->
+        <!--? gallery Products Start  -->
         <div class="gallery-area fix">
             <div class="container-fluid p-0">
                 <div class="row no-gutters">
@@ -233,159 +284,6 @@
         </div>
         <!-- gallery Products End -->
 
-        <!--? Brand Area Start-->
-        <section class="work-company section-padding30" style="background: #2e0e8c;">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-5 col-md-8">
-                        <!-- Section Tittle -->
-                        <div class="section-tittle section-tittle2 mb-50">
-                            <h2>Our Top Genaral Sponsors.</h2>
-                            <p>There arge many variations ohf passages of sorem gp ilable, but the majority have
-                                ssorem
-                                gp iluffe.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="logo-area">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand2.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand3.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand4.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand5.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="single-logo mb-30">
-                                        <img src="front-office/assets/img/gallery/cisco_brand6.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Brand Area End-->
-        <!--? Blog Area Start -->
-        <section class="home-blog-area section-padding30">
-            <div class="container">
-                <!-- Section Tittle -->
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-8">
-                        <div class="section-tittle text-center mb-50">
-                            <h2>News From Blog</h2>
-                            <p>There arge many variations ohf passages of sorem gp ilable, but the majority have ssorem
-                                gp iluffe.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="home-blog-single mb-30">
-                            <div class="blog-img-cap">
-                                <div class="blog-img">
-                                    <img src="front-office/assets/img/gallery/home-blog1.png" alt="">
-                                    <!-- Blog date -->
-                                    <div class="blog-date text-center">
-                                        <span>24</span>
-                                        <p>Now</p>
-                                    </div>
-                                </div>
-                                <div class="blog-cap">
-                                    <p>| Physics</p>
-                                    <h3><a href="blog_details.html">Footprints in Time is perfect House in
-                                            Kurashiki</a></h3>
-                                    <a href="blog_details.html" class="more-btn">Read more Â»</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="home-blog-single mb-30">
-                            <div class="blog-img-cap">
-                                <div class="blog-img">
-                                    <img src="front-office/assets/img/gallery/home-blog2.png" alt="">
-                                    <!-- Blog date -->
-                                    <div class="blog-date text-center">
-                                        <span>24</span>
-                                        <p>Now</p>
-                                    </div>
-                                </div>
-                                <div class="blog-cap">
-                                    <p>| Physics</p>
-                                    <h3><a href="blog_details.html">Footprints in Time is perfect House in
-                                            Kurashiki</a></h3>
-                                    <a href="blog_details.html" class="more-btn">Read more Â»</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="home-blog-single mb-30">
-                            <div class="blog-img-cap">
-                                <div class="blog-img">
-                                    <img src="front-office/assets/img/gallery/home-blog1.png" alt="">
-                                    <!-- Blog date -->
-                                    <div class="blog-date text-center">
-                                        <span>24</span>
-                                        <p>Now</p>
-                                    </div>
-                                </div>
-                                <div class="blog-cap">
-                                    <p>| Physics</p>
-                                    <h3><a href="blog_details.html">Footprints in Time is perfect House in
-                                            Kurashiki</a></h3>
-                                    <a href="blog_details.html" class="more-btn">Read more Â»</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="home-blog-single mb-30">
-                            <div class="blog-img-cap">
-                                <div class="blog-img">
-                                    <img src="front-office/assets/img/gallery/home-blog2.png" alt="">
-                                    <!-- Blog date -->
-                                    <div class="blog-date text-center">
-                                        <span>24</span>
-                                        <p>Now</p>
-                                    </div>
-                                </div>
-                                <div class="blog-cap">
-                                    <p>| Physics</p>
-                                    <h3><a href="blog_details.html">Footprints in Time is perfect House in
-                                            Kurashiki</a></h3>
-                                    <a href="blog_details.html" class="more-btn">Read more Â»</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Blog Area End -->
     </main>
     <footer>
         <!-- Footer Start-->
