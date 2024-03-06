@@ -29,6 +29,7 @@ class CategoryController extends Controller
     {
 
         $validatedData = $request->validate([
+            'id' => 'required',
             'title' => 'required',
         ]);
 

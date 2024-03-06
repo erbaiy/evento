@@ -73,16 +73,15 @@ Route::post('eventAction', [AdminController::class, 'action'])->name('eventActio
 // front-office events
 
 Route::get('acceuill', [ReservationController::class, 'index'])->name('acceuill');
-Route::post('/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
+Route::match(['get', 'post'], '/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
 
 // action reservation organizateur 
 Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
-Route::post('/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
-
+Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
 
 
 
 // Ticket 
 
 
-Route::get('ticket', [TicketController::class, 'index'])->name('ticket.index');
+// Route::get('ticketsend', [TicketController::class, 'sendemail'])->name('ticksendet.send');
