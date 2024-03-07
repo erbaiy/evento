@@ -8,6 +8,7 @@
                     <div class="about-caption mb-50">
                         <!-- Section Tittle -->
                         <div class="section-tittle mb-35">
+
                             <h2>{{ $event->title }}</h2>
                         </div>
                         <p>{{ $event->description }}</p>
@@ -36,7 +37,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="btn mt-50">Get Your Ticket</a>
+                    <form action="{{ route('reserveTicket') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ session('id') }}">
+                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+                        <button type="submit" class="btn btn-seccess">get ticket </button>
+                    </form>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <!-- about-img -->

@@ -1,10 +1,17 @@
 @extends('front-office.app.layout')
+
+
+
 @section('content')
-    <div class="container">
-        <form action=""></form>
+    <div>
+
+        {{-- <form id="searchForm" action="/events/search" method="POST">
+            @csrf --}}
+        <input type="text" id="search" name="search" placeholder="Search events">
+        <button type="submit">Search</button>
+        {{-- </form> --}}
+
     </div>
-
-
     <!--? Blog Area Start -->
     <section class="home-blog-area section-padding30">
         <div class="container">
@@ -18,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="events-container" class="events-container">
                 @foreach ($events as $event)
                     <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="home-blog-single mb-30">
@@ -62,67 +69,28 @@
         </div>
     </section>
     <!-- Blog Area End -->
+@endsection
 
-    <!--? gallery Products Start  -->
-    <div class="gallery-area fix">
-        <div class="container-fluid p-0">
-            <div class="row no-gutters">
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery1.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery2.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery3.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery4.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery5.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="gallery-box">
-                        <div class="single-gallery">
-                            <div class="gallery-img "
-                                style="background-image: url(front-office/assets/img/gallery/gallery6.png);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- gallery Products End -->
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('keyup', function(e) {
+            e.preventDefault();
+            let search_string = $('#search').val();
+            console.log(search_string);
+
+            // Perform search using AJAX
+            // $.ajax({
+            //     url: {{ route('search.event') }},
+            //     method: 'GET',
+            //     data: {
+            //         search_string: search_string
+            //     },
+            //     success: function(res) {
+            //         console.log(res);
+            //         $('.events-container').html(res);
+            //     }
+            // });
+        });
+    </script>
 @endsection

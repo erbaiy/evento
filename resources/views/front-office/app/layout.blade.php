@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="front-office/assets/css/slick.css">
     <link rel="stylesheet" href="front-office/assets/css/nice-select.css">
     <link rel="stylesheet" href="front-office/assets/css/style.css">
+
+
 </head>
 
 <body>
@@ -57,24 +59,18 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="spakers.html">Spakers</a></li>
-                                            <li><a href="schedule.html">Schedule</a></li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog_details.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Element</a></li>
-                                                </ul>
+                                            <li><a href="{{ route('acceuill') }}">Home</a></li>
+                                            <li><a href="{{ route('front-office.galory') }}">Blog</a>
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
+                                <a href="{{ route('getSignUpView') }}" style="color:black">Sign up</a>
                                 <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                    <a href="#" class="btn header-btn">Get Your Ticket</a>
+                                    <a href="{{ route('getSignInView') }}" class="btn header-btn">Sign in</a>
                                 </div>
+                                <a href="{{ route('auth_Logout') }}" style="color:black">logout</a>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -87,6 +83,78 @@
         </div>
         <!-- Header End -->
     </header>
+    <div class="slider-area position-relative">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-9 col-sm-10">
+                            <div class="hero__caption">
+                                <span data-animation="fadeInLeft" data-delay=".1s">Committed to success</span>
+                                <h1 data-animation="fadeInLeft" data-delay=".5s">Digital Conference For Designers</h1>
+                                <!-- Hero-btn -->
+                                <div class="slider-btns">
+                                    <a data-animation="fadeInLeft" data-delay="1.0s" href="industries.html"
+                                        class="btn hero-btn">Download</a>
+                                    <a data-animation="fadeInRight" data-delay="1.0s" class="popup-video video-btn"
+                                        href="https://www.youtube.com/watch?v=up68UAfH0d0">
+                                        <i class="fas fa-play"></i></a>
+                                    <p class="video-cap d-none d-sm-blcok" data-animation="fadeInRight"
+                                        data-delay="1.0s">Story Vidoe<br> Watch</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Slider -->
+            <div class="single-slider slider-height d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-9 col-sm-10">
+                            <div class="hero__caption">
+                                <span data-animation="fadeInLeft" data-delay=".1s">Committed to success</span>
+                                <h1 data-animation="fadeInLeft" data-delay=".5s">Digital Conference For Designers</h1>
+                                <!-- Hero-btn -->
+                                <div class="slider-btns">
+                                    <a data-animation="fadeInLeft" data-delay="1.0s" href="industries.html"
+                                        class="btn hero-btn">Download</a>
+                                    <a data-animation="fadeInRight" data-delay="1.0s" class="popup-video video-btn"
+                                        href="https://www.youtube.com/watch?v=up68UAfH0d0">
+                                        <i class="fas fa-play"></i></a>
+                                    <p class="video-cap d-none d-sm-blcok" data-animation="fadeInRight"
+                                        data-delay="1.0s">Story Vidoe<br> Watch</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Counter Section Begin -->
+        <div class="counter-section d-none d-sm-block">
+            <div class="cd-timer" id="countdown">
+                <div class="cd-item">
+                    <span>96</span>
+                    <p>Days</p>
+                </div>
+                <div class="cd-item">
+                    <span>15</span>
+                    <p>Hrs</p>
+                </div>
+                <div class="cd-item">
+                    <span>07</span>
+                    <p>Min</p>
+                </div>
+                <div class="cd-item">
+                    <span>02</span>
+                    <p>Sec</p>
+                </div>
+            </div>
+        </div>
+        <!-- Counter Section End -->
+    </div>
     <main>
         @yield('content')
 
@@ -273,6 +341,8 @@
     <!-- Jquery Plufront-office/gins, main Jquery -->
     <script src="./front-office/assets/js/plugins.js"></script>
     <script src="./front-office/assets/js/main.js"></script>
+
+    @yield('scripts')
 
 </body>
 

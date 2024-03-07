@@ -58,6 +58,54 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         $event->delete();
+
         return redirect()->route('event.index')->with('success', 'Event deleted successfully.');
+    }
+
+
+    public function edite(Request $request, $id)
+    {
+        $categories = Category::all();
+        $event = Event::find($id);
+
+        if (!$event) {
+            // Handle the case when the event is not found
+            return redirect()->route('event.index')->with('error', 'Event not found.');
+        }
+
+        return view('back-office.events.update', compact('event', 'categories'));
+    }
+
+    public function update(Request $request, $event_id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'date' => 'required|date',
+            'typeAccept' => 'required',
+            'location' => 'required',
+            'category_id' => 'required|numeric',
+            'places' => 'required|numeric',
+        ]);
+
+        $event = Event::findOrFail($event_id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('assets/img'), $imageName);
+            $event->image = 'assets/img/' . $imageName;
+        }
+
+        $event->title = $validatedData['title'];
+        $event->description = $validatedData['description'];
+        $event->date = $validatedData['date'];
+        $event->typeAccept = $validatedData['typeAccept'];
+        $event->location = $validatedData['location'];
+        $event->category_id = $validatedData['category_id'];
+        $event->places = $validatedData['places'];
+        $event->save();
+
+        return redirect()->route('event.index')->with('success', 'Event updated successfully.');
     }
 }

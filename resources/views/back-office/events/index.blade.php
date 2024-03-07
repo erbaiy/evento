@@ -36,7 +36,7 @@
                     <td>{{ $event->title }}</td>
                     <td>{{ $event->location }}</td>
                     <td>
-                        <a type="button" class="btn btn-success">Success</a>
+                        <a href="{{ route('event.edit', $event->id) }}" class="btn btn-success">Edit</a>
                     </td>
                     <td>
                         <form action="{{ route('events.destroy', $event->id) }}" method="POST">
