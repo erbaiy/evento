@@ -62,11 +62,20 @@ class AuthentificationController extends Controller
 
             return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
         } else {
+
             session(['id' => $user->id]);
             session('id');
-            echo '<h1 class="alert alert-danger"> welcome in home page</h1>';
+            if ($user->role == 'admin') {
+                return redirect()->route('eventsHundel');
+            } elseif ($user->role == 'organzer') {
+                return redirect()->route('event.index');
+            } else {
+                return redirect()->route('acceuill');
+            }
         }
+        echo '<h1 class="alert alert-danger"> welcome in home page</h1>';
     }
+
 
     public function logout(Request $request)
     {

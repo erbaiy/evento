@@ -27,14 +27,11 @@ Route::get('/', function () {
 });
 
 //Authenfication routes
-
 Route::get('/signUp', [AuthentificationController::class, 'getSignUpView'])->name('getSignUpView');
 Route::post('/register', [AuthentificationController::class, 'register'])->name('auth_Rogister');
 Route::get('/signIn', [AuthentificationController::class, 'getSignInView'])->name('getSignInView');
 Route::post('/login', [AuthentificationController::class, 'login'])->name('auth_Login');
-
 Route::get('logout', [AuthentificationController::class, 'logout'])->name('auth_Logout');
-
 
 // Reset password routes
 
@@ -43,8 +40,6 @@ Route::post('/sendToEmail', [ForgetPasswordController::class, 'sendToEmail'])->n
 Route::get('/reset-password/{token}', [ForgetPasswordController::class, 'getThenewPassword'])->name('reset-password');
 Route::post('/insertnewpassword/{token}', [ForgetPasswordController::class, 'addNewPassword'])->name('new_password');
 
-
-
 // category
 Route::get('Category/index', [CategoryController::class, 'index'])->name('category.index');
 Route::post('Category/store', [CategoryController::class, 'store'])->name('category.store');
@@ -52,34 +47,26 @@ Route::DELETE('Category/delte', [CategoryController::class, 'destroy'])->name('c
 Route::put('Category/update', [CategoryController::class, 'update'])->name('category.update');
 
 
-
-
 Route::get('detail', function () {
     return view('front-office.detail');
 })->name('front-office.detail');
 
 //event 
-
-
 Route::middleware([CheckAuth::class])->get('event', [EventController::class, 'index'])->name('event.index');
 Route::post('event/store', [EventController::class, 'store'])->name('events.store');
 Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('events.destroy');
-
 
 //hundel event admin
 Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
 Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
 
 // front-office events
-
 Route::get('acceuill', [ReservationController::class, 'index'])->name('acceuill');
 Route::match(['get', 'post'], '/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
 
 // action reservation organizateur 
 Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
 Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
-
-
 
 // Ticket 
 
