@@ -20,8 +20,23 @@ class ReservationController extends Controller
     public function index()
     {
         $events = Event::where('status', 'valide')->get();
+
         return view('front-office.index', compact('events'));
     }
+    public function detail(Request $request)
+    {
+        $event = Event::where('status', 'valide')->where('id', $request->event_id)->first();
+
+        return view('front-office.detail', compact('event'));
+    }
+
+    public function galory()
+    {
+        $images = Event::where('status', 'valid')->pluck('image');
+
+        return view('front-office.galory', compact('images'));
+    }
+
 
     // public function reserve(Request $request)
     // {
