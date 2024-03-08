@@ -9,22 +9,17 @@ class AcueilActionController extends Controller
 {
     public function search(Request $request)
     {
+        $searchString = $request->input('search_string');
 
-        dd('gfjh');
-        $searchTerm = $request->input('searchTerm');
-
-
-        $events = Event::where('title', 'LIKE', "%$searchTerm%")
-            ->orWhere('description', 'LIKE', "%$searchTerm%")
-            ->get();
-
-        // return view('front-office.app.dataSearch', compact('events'));
-        if ($events->count() >= 1) {
-            return view('front-office.index', compact('events'))->render();
+        if (empty($searchString)) {
+            // Retrieve all the data
+            $events = Event::all();
         } else {
-            response()->json([
-                'error' => 'No events found'
-            ]);
-        };
+            // Perform the search query using your logic
+            $events = Event::where('title', 'like', '%' . $searchString . '%')->get();
+        }
+
+        // Return the search results as a view
+        return view('front-office.search-results', compact('events'));
     }
 }

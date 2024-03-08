@@ -12,7 +12,7 @@ class CheckOrganizer
     {
         $user = User::find(session('id'));
         // dd($user->role);
-        if ($user->role === 'organzer') {
+        if ($user->role === 'organizer') {
             return $next($request);
         }
 

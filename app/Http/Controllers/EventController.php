@@ -68,7 +68,9 @@ class EventController extends Controller
         $categories = Category::all();
         $event = Event::find($id);
 
+
         if (!$event) {
+            dd('erroe');
             // Handle the case when the event is not found
             return redirect()->route('event.index')->with('error', 'Event not found.');
         }

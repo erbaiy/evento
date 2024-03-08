@@ -4,90 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Update Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">New Event</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{-- Form start  --}}
+    <div class="container mt-3">
+        <h1>Update Event</h1>
 
-                    <form action="{{ route('event.update', $event->id) }}" method="POST" class="container"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="title"
-                                value="{{ $event->title }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="image">Image</label>
-                            <input type="file" class="form-control" id="image" name="image">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description">{{ $event->description }}</textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" class="form-control" id="date" name="date"
-                                value="{{ $event->date }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="typeAccept">Type Accept</label>
-                            <input type="text" class="form-control" id="typeAccept" name="typeAccept"
-                                value="{{ $event->typeAccept }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" class="form-control" id="location" name="location"
-                                value="{{ $event->location }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="category_id">Category</label>
-                            <select class="form-control" id="category_id" name="category_id">
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ $category->id === $event->category_id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="places">Places</label>
-                            <input type="number" class="form-control" id="places" name="places"
-                                value="{{ $event->places }}">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
-                    {{-- Form end  --}}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </div>
-    </div>
+        @endif
 
-</body>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-</html>
+        <form method="POST" action="{{ route('event.update', $event->id) }}" enctype="multipart/form-data">
+            @csrf <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
+                    name="title" value="{{ old('title', $event->title) }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                    rows="3" required>{{ old('description', $event->description) }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date"
+                    name="date" value="{{ old('date', $event->date) }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="typeAccept" class="form-label">Type</label>
+                <input type="text" class="form-control @error('typeAccept') is-invalid @enderror" id="typeAccept"
+                    name="typeAccept" value="{{ old('typeAccept', $event->typeAccept) }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control @error('location') is-invalid @enderror" id="location"
+                    name="location" value="{{ old('location', $event->location) }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Category</label>
+                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                    name="category_id" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="1">Conference</option>
+                    <option value="2">Workshop</option>
+                    <option value="3">Meetup</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="places" class="form-label">Available Places</label>
+                <input type="number" class="form-control @error('places') is-invalid @enderror" id="places"
+                    name="places" min="1" value="{{ old('places', $event->places) }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Event

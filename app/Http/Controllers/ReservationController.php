@@ -57,41 +57,86 @@ class ReservationController extends Controller
     // }
 
 
+    // public function reserve(Request $request)
+    // {
+    //     $statusevent = Event::find($request->event_id);
+
+    //     // dd($request->user_id);
+    //     $event = new Reservation;
+    //     $event->user_id = $request->user_id;
+    //     $event->event_id = $request->event_id;
+    //     $event->reservation_date = now();
+
+    //     if ($statusevent->typeAccept == 'auto') {
+    //         $event->status = 'accepted';
+    //     }
+    //     $check = $event->save();
+    //     if ($check) {
+    //         // Create a new ticket record
+    //         $ticket = new Ticket;
+    //         $ticket->reservation_id = $event->id;
+    //         $ticket->token = Str::random(10); // Generate a random token for the ticket
+    //         $ticket->save();
+
+    //         // Generate the ticket HTML
+    //         $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
+    //         // Send ticket email to the user
+    //         $user = User::find($request->user_id);
+    //         $isSend = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
+    //         if ($isSend) {
+    //             dd('send');
+    //         } else {
+    //             dd('not send');
+    //         }
+
+    //         return redirect()->back()->with('success', 'Event reserved successfully');
+    //     } else {
+    //         return redirect()->back()->with('error', 'Failed to reserve event');
+    //     }
+    // }
     public function reserve(Request $request)
     {
-        $statusevent = Event::find($request->event_id);
-
-        // dd($request->user_id);
         $event = new Reservation;
         $event->user_id = $request->user_id;
         $event->event_id = $request->event_id;
         $event->reservation_date = now();
 
+        $statusevent = Event::find($request->event_id);
+
         if ($statusevent->typeAccept == 'auto') {
             $event->status = 'accepted';
-        }
-        $check = $event->save();
-        if ($check) {
-            // Create a new ticket record
-            $ticket = new Ticket;
-            $ticket->reservation_id = $event->id;
-            $ticket->token = Str::random(10); // Generate a random token for the ticket
-            $ticket->save();
+            $check = $event->save();
 
-            // Generate the ticket HTML
-            $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
-            // Send ticket email to the user
-            $user = User::find($request->user_id);
-            $isSend = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
-            if ($isSend) {
-                dd('send');
+            if ($check) {
+                // Create a new ticket record
+                $ticket = new Ticket;
+                $ticket->reservation_id = $event->id;
+                $ticket->token = Str::random(10); // Generate a random token for the ticket
+                $ticket->save();
+
+                // Generate the ticket HTML
+                $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
+
+                // Send ticket email to the user
+                $user = User::find($request->user_id);
+                $isSend = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
+                // dd('your ticker is reserved');
+                return redirect()->back()->with('success', 'Event reserved successfully check your tickets in your email');
             } else {
-                dd('not send');
+                // dd('your ticker is not reserved');
+                return redirect()->back()->with('error', 'Failed to reserve event');
             }
-
-            return redirect()->back()->with('success', 'Event reserved successfully');
         } else {
-            return redirect()->back()->with('error', 'Failed to reserve event');
+            // $event->status = 'manuelle';
+            $check = $event->save();
+
+            if ($check) {
+                // dd('you are reserved');
+                return redirect()->back()->with('success', 'Event reserved successfully');
+            } else {
+                // dd('your not reserved');
+                return redirect()->back()->with('error', 'Failed to reserve event');
+            }
         }
     }
 
@@ -108,16 +153,28 @@ class ReservationController extends Controller
             'action' => 'required',
         ]);
 
-        $reservation = Reservation::find($validatedData['reservation_id']);
+        $event = Reservation::find($validatedData['reservation_id']);
 
-        if ($reservation) {
-            $reservation->update(['status' => $validatedData['action']]);
+        if ($event) {
+            $event->update(['status' => $validatedData['action']]);
+            if ($event) {
+                $ticket = new Ticket;
+                $ticket->reservation_id = $event->id;
+                $ticket->token = Str::random(10); // Generate a random token for the ticket
+                $ticket->save();
 
-            return redirect()->back()->with('success', 'Reservation accepted successfully');
-        } else {
-            // Handle the case when the reservation is not found
-            return redirect()->back()->with('error', 'sommething is wrong with the reservation');
+                // Generate the ticket HTML
+                $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
+
+                // Send ticket email to the user
+                $user = User::find($event->user_id);
+                $isSent = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
+
+                return redirect()->back()->with('success', 'Event reserved successfully. Check your tickets in your email.');
+            }
         }
+
+        return redirect()->back()->with('error', 'Something is wrong with the reservation.');
     }
 }
 

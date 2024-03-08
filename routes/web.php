@@ -44,46 +44,37 @@ Route::post('/insertnewpassword/{token}', [ForgetPasswordController::class, 'add
 // Detail
 Route::get('detail', [ReservationController::class, 'detail'])->name('front-office.detail');
 Route::get('galory', [ReservationController::class, 'galory'])->name('front-office.galory');
-
-
-Route::get('/events/search', [AcueilActionController::class, 'search'])->name('search.event');
-
-
-
+Route::get('/events/search', [AcueilActionController::class, 'search'])->name('events.search');
 Route::get('/', [ReservationController::class, 'index'])->name('acceuill');
 Route::match(['get', 'post'], '/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
 
+
+// Auth midleweare
 Route::group(['middleware' => [CheckAuth::class]], function () {
-    // Authentication routes
-
     Route::get('logout', [AuthentificationController::class, 'logout'])->name('auth_Logout');
-
-    // Reset password routes
-
-
-
-    Route::get('Category/index', [CategoryController::class, 'index'])->name('category.index');
-    Route::post('Category/store', [CategoryController::class, 'store'])->name('category.store');
-    Route::DELETE('Category/delte', [CategoryController::class, 'destroy'])->name('category.destroy');
-    Route::put('Category/update', [CategoryController::class, 'update'])->name('category.update');
-
     // ADMIN
     Route::prefix('admin')->middleware('admin')->group(function () {
+
+        Route::get('category', [CategoryController::class, 'index'])->name('category.index');
+        Route::post('Category/store', [CategoryController::class, 'store'])->name('category.store');
+        Route::DELETE('Category/delte', [CategoryController::class, 'destroy'])->name('category.destroy');
+        Route::put('Category/update', [CategoryController::class, 'update'])->name('category.update');
+
+        // Handle event admin
+        Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
+        Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
+    });
+
+    // organzer
+    Route::prefix('organizer')->middleware('organizer')->group(function () {
 
         Route::get('event', [EventController::class, 'index'])->name('event.index');
         Route::post('event/store', [EventController::class, 'store'])->name('events.store');
         Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('events.destroy');
-        Route::get('event/edit/{id}', [EventController::class, 'edite'])->name('event.edit');
         Route::put('event/update/{id}', [EventController::class, 'update'])->name('event.update');
-        // Handle event admin
-        Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
-        Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
-
-        // Category
-        // Route::get('Category/index', [CategoryController::class, 'index'])->name('category.index');
-        // Route::post('Category/store', [CategoryController::class, 'store'])->name('category.store');
-        // Route::DELETE('Category/delte', [CategoryController::class, 'destroy'])->name('category.destroy');
-        // Route::put('Category/update', [CategoryController::class, 'update'])->name('category.update');
+        // Action reservation organizateur 
+        Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
+        Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
     });
 
 
@@ -95,9 +86,5 @@ Route::group(['middleware' => [CheckAuth::class]], function () {
     // });
 
     // ORGANZER
-    Route::prefix('organzer')->middleware('organzer')->group(function () {
-        // Action reservation organizateur 
-        Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
-        Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
-    });
+
 });

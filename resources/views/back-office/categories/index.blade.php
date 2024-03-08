@@ -17,51 +17,43 @@
             </thead>
             <tbody>
 
-
                 @foreach ($categories as $row)
                     <tr>
                         <td>{{ $row->title }}</td>
                         <td>
-
-                            <button class="btn btn-outline-success"data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Edit</button>
-
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
+                            <button class="btn btn-outline-success" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal{{ $row->id }}">Edit</button>
+                            <div class="modal fade" id="exampleModal{{ $row->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">edite modal</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit modal</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-
-                                            {{-- edite modal start  --}}
-                                            <form action="{{ route('category.update') }}" method="POST">
+                                            <form action="{{ route('category.update', $row->id) }}" method="POST">
                                                 @csrf
-                                                @method('put')
+                                                @method('PUT')
                                                 <div class="mb-3">
-                                                    <label for="tagName" class="form-label">Role Name</label>
+                                                    <label for="tagName" class="form-label">Category name</label>
                                                     <input type="hidden" name="id" value="{{ $row->id }}"
                                                         class="form-control" id="tagName" required>
                                                     <input type="text" name="title" class="form-control" id="tagName"
                                                         required value="{{ $row->title }}">
                                                 </div>
-
-
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </td>
-
                         <td>
                             <form action="{{ route('category.destroy') }}" method="POST">
                                 @csrf
@@ -74,6 +66,10 @@
                 @endforeach
             </tbody>
         </table>
+        <!-- Display pagination links -->
+        <div class="pagination">
+            {{ $categories->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 
 
