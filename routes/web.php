@@ -6,6 +6,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,10 @@ Route::group(['middleware' => [CheckAuth::class]], function () {
         // Handle event admin
         Route::get('eventHundel', [AdminController::class, 'index'])->name('eventsHundel');
         Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
+
+        //Statistique
+
+        Route::get('adminStatstique', [DashboardController::class, 'adminStatstique'])->name('adminStatstique');
     });
 
     // organzer
@@ -75,6 +80,10 @@ Route::group(['middleware' => [CheckAuth::class]], function () {
         // Action reservation organizateur 
         Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
         Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
+
+        //  statistiques
+
+        Route::get('/organizerStatstique', [DashboardController::class, 'organizerStatstique'])->name('organizerStatstique');
     });
 
 
