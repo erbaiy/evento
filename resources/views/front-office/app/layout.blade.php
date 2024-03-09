@@ -394,6 +394,7 @@
     <script src="./front-office/assets/js/main.js"></script>
 
     @yield('scripts')
+    @yield('filter')
 
 </body>
 

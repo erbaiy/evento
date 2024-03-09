@@ -11,9 +11,10 @@ class EventController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
 
-        $events = Event::all();
+        $categories = Category::all();
+        $events = Event::where('user_id', session('id'))->get();
+
         return view('back-office.events.index', compact('events', 'categories'));
     }
 

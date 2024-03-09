@@ -35,7 +35,18 @@ class DashboardController extends Controller
         $eventCount = Event::join('users', 'events.user_id', '=', 'users.id')
             ->where('users.id', session('id'))
             ->count();
+        $acceptReservation = Reservation::join('users', 'reservations.user_id', '=', 'users.id')
+            ->where('users.id', session('id'))->where('status', 'accepted')
+            ->count();
+        $refuseReservation = Reservation::join('users', 'reservations.user_id', '=', 'users.id')
+            ->where('users.id', session('id'))->where('status', 'refuse')
+            ->count();
+        $tickets = Ticket::join('reservations', 'ticket.reservation_id', '=', 'reservations.id')
+            ->join('events', 'events.id', '=', 'reservations.event_id')
+            ->where('events.user_id', session('id'))
+            ->count();
 
-        return view('back-office.dashboard.organizerStatstique', compact('eventCount', 'reservationCount'));
+
+        return view('back-office.dashboard.organizerStatstique', compact('eventCount', 'tickets', 'refuseReservation', 'acceptReservation', 'reservationCount'));
     }
 }

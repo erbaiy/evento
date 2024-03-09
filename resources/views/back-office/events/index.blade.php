@@ -30,10 +30,12 @@
         </thead>
         <tbody>
 
+            <td>{{ $event->title }}</td>
+
             @foreach ($events as $event)
                 <tr>
                     <td>
-                        <img src="{{ $event->image }}" alt="image">
+                        <img src="{{ $event->image }}" alt="">
                     </td>
                     <td>{{ $event->title }}</td>
                     <td>{{ $event->location }}</td>

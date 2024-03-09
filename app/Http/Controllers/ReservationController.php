@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketEmail;
+use App\Models\Category;
 use Illuminate\Support\Str;
 
 
@@ -20,8 +21,9 @@ class ReservationController extends Controller
     public function index()
     {
         $events = Event::where('status', 'valide')->get();
+        $categories = Category::all();
 
-        return view('front-office.index', compact('events'));
+        return view('front-office.index', compact('categories', 'events'));
     }
     public function detail(Request $request)
     {
@@ -143,7 +145,11 @@ class ReservationController extends Controller
     // Accept or refuse the reservation by organizater
     public function getAllReservation()
     {
-        $reservations = Reservation::where('status', 'refuse')->get();
+        $reservations = Reservation::join('events', 'reservations.event_id', '=', 'events.id')
+            ->where('reservations.status', 'refuse')
+            ->where('events.user_id', session('id'))
+            ->get();
+
         return view('back-office.reservationAction', compact('reservations'));
     }
     public function acceptReservation(Request $request)
@@ -176,39 +182,18 @@ class ReservationController extends Controller
 
         return redirect()->back()->with('error', 'Something is wrong with the reservation.');
     }
+
+
+    public function refuseReservation(Request $request)
+    {
+        $reservation = Reservation::find($request->reservation_id);
+
+        if (!$reservation) {
+            return redirect()->back()->with('error', 'Reservation not found.');
+        }
+
+        $reservation->delete();
+
+        return redirect()->back()->with('success', 'Reservation deleted successfully.');
+    }
 }
-
-
-
-
-    // public function reserve(Request $request)
-    // {
-
-
-    //     // Validate the incoming request data
-    //     // $validatedData = $request->validate([
-    //     //     'user_id' => 'required',
-    //     //     'event_id' => 'required',
-    //     // ]);
-    //     // dd($request->event_id);
-    //     $statusevent = Event::find($request->event_id);
-    //     if ($statusevent->typeAccept == 'auto') {
-    //         // dd('yes its auto');
-    //         $event = new Reservation;
-    //         $event->user_id = $request->user_id;
-    //         $event->event_id = $request->event_id;
-    //         $event->status = 'accepted';
-    //         $event->reservation_date = now();
-    //         $event->save();
-    //         return redirect()->back()->with('success', 'Event reserved successfully');
-    //     } else {
-    //         // dd('no its auto');
-    //         $event = new Reservation;
-    //         $event->user_id = $request->user_id;
-    //         $event->event_id = $request->event_id;
-
-    //         $event->reservation_date = now();
-    //         $event->save();
-    //         return redirect()->back()->with('success', 'Event reserved successfully');
-    //     }
-    // }

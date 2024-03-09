@@ -46,6 +46,9 @@ Route::post('/insertnewpassword/{token}', [ForgetPasswordController::class, 'add
 Route::get('detail', [ReservationController::class, 'detail'])->name('front-office.detail');
 Route::get('galory', [ReservationController::class, 'galory'])->name('front-office.galory');
 Route::get('/events/search', [AcueilActionController::class, 'search'])->name('events.search');
+Route::get('/events/filter', [AcueilActionController::class, 'filter'])->name('events.filter');
+
+
 Route::get('/', [ReservationController::class, 'index'])->name('acceuill');
 Route::match(['get', 'post'], '/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
 
@@ -66,8 +69,12 @@ Route::group(['middleware' => [CheckAuth::class]], function () {
         Route::post('eventAction', [AdminController::class, 'action'])->name('eventAction');
 
         //Statistique
-
         Route::get('adminStatstique', [DashboardController::class, 'adminStatstique'])->name('adminStatstique');
+        // USER CRUD
+        Route::get('user', [AdminController::class, 'getAllUser'])->name('user.index');
+        Route::post('user/store', [AdminController::class, 'store'])->name('user.store');
+        Route::DELETE('user/delte/{id}', [AdminController::class, 'destroy'])->name('user.destroy');
+        Route::put('user/update/{id}', [AdminController::class, 'update'])->name('user.update');
     });
 
     // organzer
@@ -80,6 +87,7 @@ Route::group(['middleware' => [CheckAuth::class]], function () {
         // Action reservation organizateur 
         Route::get('/getAllReservation', [ReservationController::class, 'getAllReservation'])->name('getAllReservation');
         Route::match(['get', 'post'], '/acceptReservation', [ReservationController::class, 'acceptReservation'])->name('reservation.accept');
+        Route::match(['get', 'post', 'delete'], '/refuseReservation', [ReservationController::class, 'refuseReservation'])->name('reservation.refuse');
 
         //  statistiques
 
