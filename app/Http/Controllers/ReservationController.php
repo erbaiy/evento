@@ -165,6 +165,7 @@ class ReservationController extends Controller
             $event->update(['status' => $validatedData['action']]);
             if ($event) {
                 $ticket = new Ticket;
+
                 $ticket->reservation_id = $event->id;
                 $ticket->token = Str::random(10); // Generate a random token for the ticket
                 $ticket->save();

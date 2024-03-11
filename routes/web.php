@@ -45,9 +45,11 @@ Route::post('/insertnewpassword/{token}', [ForgetPasswordController::class, 'add
 // Detail
 Route::get('detail', [ReservationController::class, 'detail'])->name('front-office.detail');
 Route::get('galory', [ReservationController::class, 'galory'])->name('front-office.galory');
-Route::get('/events/search', [AcueilActionController::class, 'search'])->name('events.search');
-Route::get('/events/filter', [AcueilActionController::class, 'filter'])->name('events.filter');
+// Route::get('/events/search', [AcueilActionController::class, 'search'])->name('events.search');
 
+// Route::get('/events/filter', [AcueilActionController::class, 'filter'])->name('events.filter');
+
+Route::get('/categories/{categoryId}/events/{textsearch}', [AcueilActionController::class, 'EventsByCategory']);
 
 Route::get('/', [ReservationController::class, 'index'])->name('acceuill');
 Route::match(['get', 'post'], '/reserveTicket', [ReservationController::class, 'reserve'])->name('reserveTicket');
