@@ -8,7 +8,7 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="gallery-box">
                             <div class="single-gallery">
-                                <div class="gallery-img" style="background-image: url({{ $image }});">
+                                <div class="gallery-img" style="background-image: url({{ $image->image }});">
                                 </div>
                             </div>
                         </div>

@@ -1,12 +1,18 @@
 @extends('back-office.app.layout')
 
 @section('content')
+    @if (session('seccess'))
+        <div class="alert alert-success">{{ session('seccess') }}</div>
+    @endif
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        new user
+    </button>
     <div class="table-responsive">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            new user
-        </button>
-        <table class="table table-striped">
+
+        <table class="container table table-striped">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -46,7 +52,7 @@
                                                 @csrf
                                                 @method('put')
 
-                                                <div class="form-group">
+                                                <div class="">
                                                     <label for="name">Name:</label>
                                                     <input type="text" name="name" id="name"
                                                         value="{{ $user->name }}" class="form-control" required>
@@ -63,7 +69,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="role">Role:</label>
-                                                    <select name="rolte" id="role" class="form-select">
+                                                    <select name="role" id="role" class="form-select">
                                                         <option value="admin"
                                                             @if ($user->role === 'admin') selected @endif>admin
                                                         </option>
@@ -106,6 +112,10 @@
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
+        <!-- Display pagination links -->
+        <div class="pagination">
+            {{ $users->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 
 

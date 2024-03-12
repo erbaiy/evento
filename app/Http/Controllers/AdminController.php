@@ -37,7 +37,7 @@ class AdminController extends Controller
     // USER CRUD
     public function getAllUser()
     {
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->paginate(5);
         return view('back-office.users.index', compact('users'));
     }
     public function store(Request $request)
@@ -80,25 +80,24 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required',
             'password' => 'required',
             'role' => 'required',
-        ], [
-            'email.unique' => 'The email address is already registered.',
         ]);
-        dd($id);
+        $user = User::findOrFail($id);
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->role = $data['role'];
 
-        $user = User::findOrFail($id); // Find the user by ID or throw an exception if not found
-        $user->update($data);
-
-        if ($user) {
-            dd('success', 'User updated successfully.');
-            return redirect()->back()->with('success', 'User updated successfully.');
-        } else {
-            dd('eroor');
-            return redirect()->back()->with('error', 'Failed to update the user.');
+        if (!empty($data['password'])) {
+            $user->password = Hash::make($data['password']);
         }
+
+        $x = $user->save();
+
+        return redirect()->back()->with('success', 'user updated successfully');
     }
 }

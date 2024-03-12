@@ -121,7 +121,11 @@
                 @endforeach
 
             </div>
+            <div class="pagination">
+                {{ $events->links('pagination::bootstrap-4') }}
+            </div>
         </div>
+
     </section>
     </div>
 @endsection
@@ -254,7 +258,6 @@
                 }
 
                 console.log(textsearch);
-
                 if (categoryId) {
                     $.ajax({
                         url: '/categories/' + categoryId + '/events/' + textsearch,

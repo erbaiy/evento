@@ -47,5 +47,9 @@
 
             </tbody>
         </table>
+        <!-- Display pagination links -->
+        <div class="pagination">
+            {{ $reservations->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 @endsection

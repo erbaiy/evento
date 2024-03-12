@@ -20,11 +20,13 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $events = Event::where('status', 'valide')->get();
+        $events = Event::where('status', 'valide')->paginate(4);
         $categories = Category::all();
 
         return view('front-office.index', compact('categories', 'events'));
     }
+
+
     public function detail(Request $request)
     {
         $event = Event::where('status', 'valide')->where('id', $request->event_id)->first();
@@ -34,68 +36,11 @@ class ReservationController extends Controller
 
     public function galory()
     {
-        $images = Event::where('status', 'valid')->pluck('image');
-
+        $images = Event::all();
+        // $images = $event->images;
         return view('front-office.galory', compact('images'));
     }
 
-
-    // public function reserve(Request $request)
-    // {
-    //     $statusevent = Event::find($request->event_id);
-
-    //     $event = new Reservation;
-    //     $event->user_id = $request->user_id;
-    //     $event->event_id = $request->event_id;
-    //     $event->reservation_date = now();
-
-    //     if ($statusevent->typeAccept == 'auto') {
-    //         $event->status = 'accepted';
-    //     }
-
-    //     $event->save();
-
-    //     return redirect()->back()->with('success', 'Event reserved successfully');
-    // }
-
-
-    // public function reserve(Request $request)
-    // {
-    //     $statusevent = Event::find($request->event_id);
-
-    //     // dd($request->user_id);
-    //     $event = new Reservation;
-    //     $event->user_id = $request->user_id;
-    //     $event->event_id = $request->event_id;
-    //     $event->reservation_date = now();
-
-    //     if ($statusevent->typeAccept == 'auto') {
-    //         $event->status = 'accepted';
-    //     }
-    //     $check = $event->save();
-    //     if ($check) {
-    //         // Create a new ticket record
-    //         $ticket = new Ticket;
-    //         $ticket->reservation_id = $event->id;
-    //         $ticket->token = Str::random(10); // Generate a random token for the ticket
-    //         $ticket->save();
-
-    //         // Generate the ticket HTML
-    //         $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
-    //         // Send ticket email to the user
-    //         $user = User::find($request->user_id);
-    //         $isSend = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
-    //         if ($isSend) {
-    //             dd('send');
-    //         } else {
-    //             dd('not send');
-    //         }
-
-    //         return redirect()->back()->with('success', 'Event reserved successfully');
-    //     } else {
-    //         return redirect()->back()->with('error', 'Failed to reserve event');
-    //     }
-    // }
     public function reserve(Request $request)
     {
         $event = new Reservation;
@@ -117,26 +62,31 @@ class ReservationController extends Controller
                 $ticket->save();
 
                 // Generate the ticket HTML
+
                 $ticketHtml = view('emails.ticket', compact('event', 'ticket'))->render();
 
                 // Send ticket email to the user
                 $user = User::find($request->user_id);
                 $isSend = Mail::to($user->email)->send(new TicketEmail($ticketHtml));
-                // dd('your ticker is reserved');
+
+                // Decrement the available places for the event
+                $statusevent->places -= 1;
+                $statusevent->save();
+
                 return redirect()->back()->with('success', 'Event reserved successfully check your tickets in your email');
             } else {
-                // dd('your ticker is not reserved');
                 return redirect()->back()->with('error', 'Failed to reserve event');
             }
         } else {
-            // $event->status = 'manuelle';
             $check = $event->save();
 
             if ($check) {
-                // dd('you are reserved');
+                // Decrement the available places for the event
+                $statusevent->places -= 1;
+                $statusevent->save();
+
                 return redirect()->back()->with('success', 'Event reserved successfully');
             } else {
-                // dd('your not reserved');
                 return redirect()->back()->with('error', 'Failed to reserve event');
             }
         }
@@ -148,7 +98,7 @@ class ReservationController extends Controller
         $reservations = Reservation::join('events', 'reservations.event_id', '=', 'events.id')
             ->where('reservations.status', 'refuse')
             ->where('events.user_id', session('id'))
-            ->get();
+            ->paginate(4);
 
         return view('back-office.reservationAction', compact('reservations'));
     }

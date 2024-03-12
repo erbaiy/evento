@@ -10,7 +10,8 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = \App\Models\Ticket::all();
+        $tickets = \App\Models\Ticket::join('reservations', 'reservations.id', '=', 'tickets.reservation_id')->get();
+
         return view('back-office.ticket.index', compact('tickets'));
     }
 

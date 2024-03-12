@@ -27,6 +27,31 @@
     <style>
         @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+        .gallery-area {
+            margin-top: 20px;
+        }
+
+        .gallery-box {
+            margin-bottom: 20px;
+        }
+
+        .single-gallery {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
         body {
             background: #f2f2f2;
             font-family: 'Open Sans', sans-serif;
@@ -85,14 +110,16 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="front-office/assets/img/logo/loder.png" alt="">
+                    <a href="{{ route('acceuill') }}">
+                        <img src="front-office/assets/img/logo/loder.png" alt="">
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Preloader Start -->
     <header>
-        <!--? Header Start -->
+        <!-- Header Start -->
         <div class="header-area">
             <div class="main-header header-sticky">
                 <div class="container-fluid">
@@ -111,17 +138,19 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="{{ route('acceuill') }}">Home</a></li>
-                                            <li><a href="{{ route('front-office.galory') }}">Blog</a>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="{{ route('front-office.galory') }}">Blog</a></li>
                                         </ul>
                                     </nav>
                                 </div>
-                                <a href="{{ route('getSignUpView') }}" style="color:black">Sign up</a>
                                 <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                    <a href="{{ route('getSignInView') }}" class="btn header-btn">Sign in</a>
+                                    <a class="btn btn-primary" href="{{ route('getSignInView') }}">Sign in</a>
                                 </div>
-                                <a href="{{ route('auth_Logout') }}" style="color:black">logout</a>
+                                <div class="header-right-btn f-right d-none d-lg-block ml-30">
+                                    <a href="{{ route('auth_Logout') }}" style="color: black">
+                                        <i class="fas fa-sign-out-alt" style="font-size: 20px;"></i> Logout
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -132,7 +161,9 @@
                 </div>
             </div>
         </div>
-        <!-- Header End -->
+    </header>
+    <!-- Header End -->
+    <!-- Header End -->
     </header>
     <div class="slider-area position-relative">
         <div class="slider-active">
@@ -142,8 +173,8 @@
                     <div class="row">
                         <div class="col-xl-8 col-lg-8 col-md-9 col-sm-10">
                             <div class="hero__caption">
-                                <span data-animation="fadeInLeft" data-delay=".1s">Committed to success</span>
-                                <h1 data-animation="fadeInLeft" data-delay=".5s">Digital Conference For Designers</h1>
+                                <span data-animation="fadeInLeft" data-delay=".1s">Evento</span>
+                                <h1 data-animation="fadeInLeft" data-delay=".5s">Join us and embark</h1>
                                 <!-- Hero-btn -->
                                 <div class="slider-btns">
                                     <a data-animation="fadeInLeft" data-delay="1.0s" href="industries.html"

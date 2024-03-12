@@ -67,7 +67,7 @@ class AuthentificationController extends Controller
             session('id');
             if ($user->role == 'admin') {
                 return redirect()->route('eventsHundel');
-            } elseif ($user->role == 'organzer') {
+            } elseif ($user->role == 'organizer') {
                 return redirect()->route('event.index');
             } else {
                 return redirect()->route('acceuill');

@@ -294,6 +294,10 @@
                                         <input type="text" class="form-control" placeholder="Name" name="name"
                                             aria-label="Name" aria-describedby="email-addon"
                                             value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+
                                     </div>
                                     <div class="mb-3">
                                         <input type="email" class="form-control" placeholder="Email"
@@ -307,6 +311,9 @@
                                         <input type="password" class="form-control" placeholder="Password"
                                             name="password" aria-label="Password" aria-describedby="password-addon"
                                             required>
+                                        @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-check form-check-info text-left">
                                         <input class="form-check-input" type="checkbox" value=""

@@ -35,9 +35,10 @@ class ForgetPasswordController extends Controller
                 ->subject('Password Reset Link');
         });
 
-        dd($link);
+        // dd($link);
 
         if ($success) {
+
             return back()->with('success', 'We have e-mailed your password reset link!');
         } else {
             return back()->withErrors(['email' => 'There was an error sending your email.']);

@@ -13,7 +13,7 @@ class EventController extends Controller
     {
 
         $categories = Category::all();
-        $events = Event::where('user_id', session('id'))->get();
+        $events = Event::where('user_id', session('id'))->paginate(3);
 
         return view('back-office.events.index', compact('events', 'categories'));
     }

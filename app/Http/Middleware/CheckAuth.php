@@ -15,7 +15,6 @@ class CheckAuth
             // User is not authenticated, handle accordingly (e.g., redirect to login page)
             return redirect()->route('getSignInView');
         }
-
         return $next($request);
     }
 }
